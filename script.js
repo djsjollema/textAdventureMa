@@ -14,8 +14,7 @@ const places = [
         "description":"u staat in de kantine van het Media college",
         "image":"img/0.jpg",
         "options":[
-            {"direction":"west","destination":2},
-            {"direction":"zuid","destination":1}
+            {"direction":"west","destination":2}
         ]
     },
     {
@@ -25,7 +24,6 @@ const places = [
         "options":[
             {"direction":"omhoog","destination":4},
             {"direction":"omlaag","destination":2},
-            {"direction":"west","destination":0}
         ]
     },
     {
@@ -42,7 +40,7 @@ const places = [
         "description":"u bent in de docentenkamer",
         "image":"img/3.jpg",
         "options":[
-            {"direction":"west","destination":4}           
+            {"direction":"zuid","destination":4}           
         ]
     },
     {
@@ -93,25 +91,37 @@ const places = [
 ];
 
 function showLocation(){
+    // maak de html-blokken leeg
     navBox.innerHTML = "";
     optionsBox.innerHTML = "";
-    myImg.src = places[currentPosition].image;
+    
+    // zet je juiste omschrijving in het description blok in de html
     descriptionBox.innerHTML = places[currentPosition].description;
+
+    // zet het juiste plaatje wat hoort bij de positie neer
+    myImg.src = places[currentPosition].image;
+
+    // ga voor de huide plaats alle elementen in de eigenschap options na
     let possibleDirections = places[currentPosition].options.map((option,i) => { 
-        console.log(option);
+
+        // plaats alle opties in een <p> en plaats die in de optionsBox 
         let directionsP = document.createElement("p");
         directionsP.innerHTML = "<b>" + option.direction + "</b>: naar de " + places[option.destination].name;
         optionsBox.appendChild(directionsP);
+
+        // maak voor iedere direction een button aan
 
         let btn = document.createElement("input");
         btn.setAttribute("type","button");
         btn.setAttribute("class","inputButton");
         btn.setAttribute("value",option.direction);
-
         navBox.appendChild(btn);
+
+        // maak voor ieder button een click-handler aan
         btn.addEventListener("click", ()=>{
             currentPosition = option.destination;
-            console.log(currentPosition);
+
+            //laat van de gekozen destination de lokatie zien
             showLocation();
         });
     });
