@@ -4,9 +4,11 @@ const myInput = document.getElementById("myInput");
 const inputButton = document.getElementById("inputButton");
 const descriptionBox = document.getElementById("descriptionBox");
 const optionsBox = document.getElementById("optionsBox");
+const objectsBox = document.getElementById("objectsBox");
 const navBox = document.getElementById("navBox");
+const inventoryBox = document.getElementById("inventoryBox");
 
-let currentPosition = 2;
+let currentPosition = 0;
 
 const places = [
     {
@@ -15,6 +17,12 @@ const places = [
         "image":"img/0.jpg",
         "options":[
             {"direction":"west","destination":2}
+        ],
+        "objects":[
+            { "emoticon":"🍇","object":"grape"},
+            { "emoticon":"🍓","object":"strawberry"},
+            { "emoticon":"🍒","object":"Cherries"},
+            { "emoticon":"☕","object":"coffee"}
         ]
     },
     {
@@ -40,7 +48,7 @@ const places = [
         "description":"u bent in de docentenkamer",
         "image":"img/3.jpg",
         "options":[
-            {"direction":"zuid","destination":4}           
+            {"direction":"west","destination":4}           
         ]
     },
     {
@@ -90,6 +98,8 @@ const places = [
     }
 ];
 
+let inventory = new Array();
+
 function showLocation(){
     // maak de html-blokken leeg
     navBox.innerHTML = "";
@@ -101,6 +111,9 @@ function showLocation(){
     // zet het juiste plaatje wat hoort bij de positie neer
     myImg.src = places[currentPosition].image;
 
+    navBox.innerHTML = "kies een richting: ";
+    optionsBox.innerHTML = "mogelijke richtingen:";
+
     // ga voor de huide plaats alle elementen in de eigenschap options na
     let possibleDirections = places[currentPosition].options.map((option,i) => { 
 
@@ -111,20 +124,48 @@ function showLocation(){
 
         // maak voor iedere direction een button aan
 
-        let btn = document.createElement("input");
-        btn.setAttribute("type","button");
-        btn.setAttribute("class","inputButton");
-        btn.setAttribute("value",option.direction);
-        navBox.appendChild(btn);
+        let nav_btn = document.createElement("input");
+        nav_btn.setAttribute("type","button");
+        nav_btn.setAttribute("class","inputButton");
+        nav_btn.setAttribute("value",option.direction);
+        navBox.appendChild(nav_btn);
 
         // maak voor ieder button een click-handler aan
-        btn.addEventListener("click", ()=>{
+        nav_btn.addEventListener("click", ()=>{
             currentPosition = option.destination;
-
-            //laat van de gekozen destination de lokatie zien
+             //laat van de gekozen destination de lokatie zien
             showLocation();
         });
     });
+
+    objectsBox.innerHTML = "u ziet hier:";
+    //typeof lastname !== "undefined"
+    if(typeof places[currentPosition].objects.length !== "undefined"){
+        console.log('dit zie je dan niet');
+        let availebleObject = places[currentPosition].objects.map((object,i) => {
+            console.log(object);
+            let inv_btn = document.createElement("input");
+            inv_btn.setAttribute("type","button");
+            inv_btn.setAttribute("class","inputButton");
+            inv_btn.setAttribute("value",object.emoticon);
+            objectsBox.appendChild(inv_btn);
+    
+            inv_btn.addEventListener('click',()=>{
+                //console.log(object);
+                inventory.push(object);
+                places[currentPosition].objects.splice(i,1);
+                showLocation();
+            })
+        });
+
+    }
+
+    inventoryBox.innerHTML = "inventory: ";
+    inventory.map( object => {
+        inventoryBox.innerHTML += object.emoticon;
+    })
+
+
 }
 
 showLocation();

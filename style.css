@@ -48,14 +48,14 @@ body{
 }
 
 .inputButton{
-    background: linear-gradient(to top left,  #c471ed, #12c2e9); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-    width: 100px;
-    border:none;
+    /*background: linear-gradient(to top left,  #c471ed, #12c2e9); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    width: 5em;
+    border:inset 2px;
     padding:5px;
     font-size: 12px;
     border-radius: 10px;
     /*text-transform: capitalize;*/
-    color: #eee;
+    color: #222;
     margin: 5px;
 }
 
