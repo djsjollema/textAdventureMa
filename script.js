@@ -32,6 +32,8 @@ const places = [
         "options":[
             {"direction":"omhoog","destination":4},
             {"direction":"omlaag","destination":2},
+        ],
+        "objects":[
         ]
     },
     {
@@ -41,6 +43,8 @@ const places = [
         "options":[
             {"direction":"omhoog","destination":1},
             {"direction":"west","destination":0}           
+        ],
+        "objects":[
         ]
     },
     {
@@ -49,6 +53,8 @@ const places = [
         "image":"img/3.jpg",
         "options":[
             {"direction":"west","destination":4}           
+        ],
+        "objects":[
         ]
     },
     {
@@ -61,6 +67,8 @@ const places = [
             {"direction":"zuid","destination":8},
             {"direction":"west","destination":6},
             {"direction":"omlaag","destination":1}           
+        ],
+        "objects":[
         ]
     },
     {
@@ -69,6 +77,8 @@ const places = [
         "image":"img/5.jpg",
         "options":[
             {"direction":"west","destination":8}           
+        ],
+        "objects":[
         ]
     },
     {
@@ -77,6 +87,8 @@ const places = [
         "image":"img/6.jpg",
         "options":[
             {"direction":"oost","destination":4}           
+        ],
+        "objects":[
         ]
     },
     {
@@ -85,6 +97,8 @@ const places = [
         "image":"img/7.jpg",
         "options":[
             {"direction":"zuid","destination":4}           
+        ],        
+        "objects":[
         ]
     },
     {
@@ -94,6 +108,8 @@ const places = [
         "options":[
             {"direction":"noord","destination":4},
             {"direction":"west","destination":5}           
+        ],
+        "objects":[
         ]
     }
 ];
@@ -139,11 +155,8 @@ function showLocation(){
     });
 
     objectsBox.innerHTML = "u ziet hier:";
-    //typeof lastname !== "undefined"
     if(typeof places[currentPosition].objects.length !== "undefined"){
-        console.log('dit zie je dan niet');
         let availebleObject = places[currentPosition].objects.map((object,i) => {
-            console.log(object);
             let inv_btn = document.createElement("input");
             inv_btn.setAttribute("type","button");
             inv_btn.setAttribute("class","inputButton");
@@ -151,7 +164,6 @@ function showLocation(){
             objectsBox.appendChild(inv_btn);
     
             inv_btn.addEventListener('click',()=>{
-                //console.log(object);
                 inventory.push(object);
                 places[currentPosition].objects.splice(i,1);
                 showLocation();
@@ -161,8 +173,18 @@ function showLocation(){
     }
 
     inventoryBox.innerHTML = "inventory: ";
-    inventory.map( object => {
-        inventoryBox.innerHTML += object.emoticon;
+    inventory.map( (object,i) => {
+        let inv_btn = document.createElement("input");
+        inv_btn.setAttribute("type","button");
+        inv_btn.setAttribute("value", object.emoticon);
+        inventoryBox.appendChild(inv_btn);
+
+        inv_btn.addEventListener("click",() => {
+            places[currentPosition].objects.push(object);
+            inventory.splice(i,1);
+            showLocation();
+        })
+        
     })
 
 
